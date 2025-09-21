@@ -204,6 +204,6 @@ If you find this project helpful, please give it a ⭐ on GitHub!
 
 ---
 
-**Built with ❤️ by [Tarun Dubey](https://github.com/Tarun-dube)**
+**Built by [Tarun Dubey](https://github.com/Tarun-dube)**
 
 _Demonstrating modern full-stack development with AI integration, completely free to build and deploy._
