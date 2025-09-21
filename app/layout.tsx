@@ -28,7 +28,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang='en' suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning>
       <head>
         <script
           dangerouslySetInnerHTML={{
@@ -45,12 +45,18 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200 transition-colors duration-300`}
+        className={`
+          ${geistSans.variable} ${geistMono.variable} antialiased 
+          bg-gradient-to-br from-rose-50 via-white to-pink-50 
+          dark:from-gray-900 dark:via-gray-800 dark:to-rose-900/30
+          text-gray-800 dark:text-gray-200 
+          transition-colors duration-300
+        `}
       >
         <ThemeProvider>
           <ClerkThemeProvider>
             <Navbar />
-            {children}
+            <main className="relative z-10">{children}</main>
             <Footer />
           </ClerkThemeProvider>
         </ThemeProvider>
