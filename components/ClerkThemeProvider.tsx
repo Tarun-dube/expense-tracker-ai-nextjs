@@ -18,7 +18,7 @@ export default function ClerkThemeProvider({
       appearance={{
         baseTheme: theme === 'dark' ? dark : undefined,
         variables: {
-          colorPrimary: theme === 'dark' ? '#10b981' : '#059669', // emerald-500/600
+          colorPrimary: theme === 'dark' ? '#3b82f6' : '#2563eb', // blue-500/600
           colorBackground: theme === 'dark' ? '#1f2937' : '#ffffff',
           colorInputBackground: theme === 'dark' ? '#374151' : '#f9fafb',
           colorInputText: theme === 'dark' ? '#f3f4f6' : '#1f2937',
@@ -26,9 +26,9 @@ export default function ClerkThemeProvider({
         },
         elements: {
           formButtonPrimary: {
-            backgroundColor: theme === 'dark' ? '#10b981' : '#059669',
+            backgroundColor: theme === 'dark' ? '#3b82f6' : '#2563eb',
             '&:hover': {
-              backgroundColor: theme === 'dark' ? '#059669' : '#047857',
+              backgroundColor: theme === 'dark' ? '#2563eb' : '#1d4ed8',
             },
           },
           card: {
@@ -36,42 +36,42 @@ export default function ClerkThemeProvider({
             backdropFilter: 'blur(16px)',
             border:
               theme === 'dark'
-                ? '1px solid rgba(75, 85, 99, 0.3)'
-                : '1px solid rgba(229, 231, 235, 0.3)',
+                ? '1px solid rgba(59, 130, 246, 0.3)'
+                : '1px solid rgba(191, 219, 254, 0.3)',
           },
           headerTitle: {
             color: theme === 'dark' ? '#f3f4f6' : '#1f2937',
           },
           headerSubtitle: {
-            color: theme === 'dark' ? '#9ca3af' : '#6b7280',
+            color: theme === 'dark' ? '#93c5fd' : '#2563eb',
           },
           socialButtonsBlockButton: {
             border:
               theme === 'dark'
-                ? '1px solid rgba(75, 85, 99, 0.3)'
-                : '1px solid rgba(229, 231, 235, 0.3)',
+                ? '1px solid rgba(59, 130, 246, 0.3)'
+                : '1px solid rgba(191, 219, 254, 0.3)',
             backgroundColor:
               theme === 'dark'
-                ? 'rgba(55, 65, 81, 0.5)'
-                : 'rgba(255, 255, 255, 0.5)',
+                ? 'rgba(30, 58, 138, 0.4)'
+                : 'rgba(219, 234, 254, 0.5)',
             backdropFilter: 'blur(8px)',
           },
           dividerLine: {
             backgroundColor:
               theme === 'dark'
-                ? 'rgba(75, 85, 99, 0.3)'
-                : 'rgba(229, 231, 235, 0.3)',
+                ? 'rgba(59, 130, 246, 0.3)'
+                : 'rgba(191, 219, 254, 0.3)',
           },
           formFieldInput: {
             backgroundColor:
               theme === 'dark'
-                ? 'rgba(55, 65, 81, 0.5)'
-                : 'rgba(249, 250, 251, 0.8)',
+                ? 'rgba(30, 58, 138, 0.4)'
+                : 'rgba(239, 246, 255, 0.8)',
             backdropFilter: 'blur(8px)',
             border:
               theme === 'dark'
-                ? '1px solid rgba(75, 85, 99, 0.3)'
-                : '1px solid rgba(229, 231, 235, 0.3)',
+                ? '1px solid rgba(37, 99, 235, 0.3)'
+                : '1px solid rgba(191, 219, 254, 0.3)',
           },
         },
       }}

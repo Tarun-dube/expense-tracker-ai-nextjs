@@ -47,8 +47,8 @@ export default function RootLayout({
       <body
         className={`
           ${geistSans.variable} ${geistMono.variable} antialiased 
-          bg-gradient-to-br from-rose-50 via-white to-pink-50 
-          dark:from-gray-900 dark:via-gray-800 dark:to-rose-900/30
+          bg-gradient-to-br from-blue-50 via-white to-cyan-50 
+          dark:from-gray-900 dark:via-gray-800 dark:to-blue-900/30
           text-gray-800 dark:text-gray-200 
           transition-colors duration-300
         `}

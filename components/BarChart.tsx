@@ -13,7 +13,6 @@ import {
 import { useTheme } from '@/contexts/ThemeContext';
 import { useState, useEffect } from 'react';
 
-// Register Chart.js components
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -23,27 +22,20 @@ ChartJS.register(
   Legend
 );
 
-// Define the type for a record
 interface Record {
-  date: string; // ISO date string
-  amount: number; // Amount spent
-  category: string; // Expense category
+  date: string;
+  amount: number;
+  category: string;
 }
 
 const BarChart = ({ records }: { records: Record[] }) => {
   const { theme } = useTheme();
   const isDark = theme === 'dark';
-  const [windowWidth, setWindowWidth] = useState(1024); // Default to desktop width
+  const [windowWidth, setWindowWidth] = useState(1024);
 
   useEffect(() => {
-    // Set initial window width
     setWindowWidth(window.innerWidth);
-
-    // Add resize listener
-    const handleResize = () => {
-      setWindowWidth(window.innerWidth);
-    };
-
+    const handleResize = () => setWindowWidth(window.innerWidth);
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
@@ -58,9 +50,7 @@ const BarChart = ({ records }: { records: Record[] }) => {
     >();
 
     records.forEach((record) => {
-      // Parse the date string properly and extract just the date part (YYYY-MM-DD)
       const dateObj = new Date(record.date);
-      // Use UTC methods to avoid timezone issues
       const year = dateObj.getUTCFullYear();
       const month = String(dateObj.getUTCMonth() + 1).padStart(2, '0');
       const day = String(dateObj.getUTCDate()).padStart(2, '0');
@@ -76,12 +66,11 @@ const BarChart = ({ records }: { records: Record[] }) => {
         dateMap.set(dateKey, {
           total: record.amount,
           categories: [record.category],
-          originalDate: record.date, // Keep original ISO date for sorting
+          originalDate: record.date,
         });
       }
     });
 
-    // Convert to array and sort by date (oldest to newest)
     return Array.from(dateMap.entries())
       .map(([date, data]) => ({
         date,
@@ -98,33 +87,31 @@ const BarChart = ({ records }: { records: Record[] }) => {
 
   const aggregatedData = aggregateByDate(records);
 
-  // Get color based on amount (since we're aggregating multiple categories)
+  // Blueish theme
   const getAmountColor = (amount: number) => {
     if (amount > 200)
       return {
-        bg: isDark ? 'rgba(255, 99, 132, 0.3)' : 'rgba(255, 99, 132, 0.2)',
-        border: isDark ? 'rgba(255, 99, 132, 0.8)' : 'rgba(255, 99, 132, 1)',
-      }; // Red for high spending
+        bg: isDark ? 'rgba(30, 58, 138, 0.4)' : 'rgba(37, 99, 235, 0.4)',
+        border: isDark ? 'rgba(96, 165, 250, 1)' : 'rgba(37, 99, 235, 1)',
+      };
     if (amount > 100)
       return {
-        bg: isDark ? 'rgba(255, 206, 86, 0.3)' : 'rgba(255, 206, 86, 0.2)',
-        border: isDark ? 'rgba(255, 206, 86, 0.8)' : 'rgba(255, 206, 86, 1)',
-      }; // Yellow for medium spending
+        bg: isDark ? 'rgba(30, 64, 175, 0.3)' : 'rgba(59, 130, 246, 0.3)',
+        border: isDark ? 'rgba(147, 197, 253, 1)' : 'rgba(59, 130, 246, 1)',
+      };
     if (amount > 50)
       return {
-        bg: isDark ? 'rgba(54, 162, 235, 0.3)' : 'rgba(54, 162, 235, 0.2)',
-        border: isDark ? 'rgba(54, 162, 235, 0.8)' : 'rgba(54, 162, 235, 1)',
-      }; // Blue for moderate spending
+        bg: isDark ? 'rgba(29, 78, 216, 0.25)' : 'rgba(96, 165, 250, 0.25)',
+        border: isDark ? 'rgba(191, 219, 254, 1)' : 'rgba(96, 165, 250, 1)',
+      };
     return {
-      bg: isDark ? 'rgba(75, 192, 192, 0.3)' : 'rgba(75, 192, 192, 0.2)',
-      border: isDark ? 'rgba(75, 192, 192, 0.8)' : 'rgba(75, 192, 192, 1)',
-    }; // Green for low spending
+      bg: isDark ? 'rgba(37, 99, 235, 0.2)' : 'rgba(147, 197, 253, 0.2)',
+      border: isDark ? 'rgba(219, 234, 254, 1)' : 'rgba(147, 197, 253, 1)',
+    };
   };
 
-  // Prepare data for the chart
   const data = {
     labels: aggregatedData.map((item) => {
-      // Format date as MM/DD for better readability
       const [, month, day] = item.date.split('-');
       return `${month}/${day}`;
     }),
@@ -137,29 +124,25 @@ const BarChart = ({ records }: { records: Record[] }) => {
         borderColor: aggregatedData.map(
           (item) => getAmountColor(item.amount).border
         ),
-        borderWidth: 1,
-        borderRadius: 2, // Rounded bar edges
+        borderWidth: 1.5,
+        borderRadius: 4,
       },
     ],
   };
 
   const options = {
     responsive: true,
-    maintainAspectRatio: false, // Allow flexible height
+    maintainAspectRatio: false,
     plugins: {
-      legend: {
-        display: false, // Remove legend
-      },
-      title: {
-        display: false, // Remove chart title
-      },
+      legend: { display: false },
+      title: { display: false },
       tooltip: {
         backgroundColor: isDark
-          ? 'rgba(31, 41, 55, 0.95)'
+          ? 'rgba(17, 24, 39, 0.95)'
           : 'rgba(255, 255, 255, 0.95)',
         titleColor: isDark ? '#f9fafb' : '#1f2937',
         bodyColor: isDark ? '#d1d5db' : '#374151',
-        borderColor: isDark ? '#374151' : '#e5e7eb',
+        borderColor: isDark ? '#1e3a8a' : '#bfdbfe',
         borderWidth: 1,
         cornerRadius: 8,
         callbacks: {
@@ -170,7 +153,7 @@ const BarChart = ({ records }: { records: Record[] }) => {
               item.categories.length > 1
                 ? `Categories: ${item.categories.join(', ')}`
                 : `Category: ${item.categories[0]}`;
-            return [`Total: $${item.amount.toFixed(2)}`, categoriesText];
+            return [`Total: ₹${item.amount.toFixed(2)}`, categoriesText];
           },
         },
       },
@@ -180,53 +163,39 @@ const BarChart = ({ records }: { records: Record[] }) => {
         title: {
           display: true,
           text: 'Date',
-          font: {
-            size: isMobile ? 12 : 14,
-            weight: 'bold' as const,
-          },
-          color: isDark ? '#d1d5db' : '#2c3e50',
+          font: { size: isMobile ? 12 : 14, weight: 'bold' as const },
+          color: isDark ? '#bfdbfe' : '#1e3a8a',
         },
         ticks: {
-          font: {
-            size: isMobile ? 10 : 12,
-          },
-          color: isDark ? '#9ca3af' : '#7f8c8d', // Gray x-axis labels
-          maxRotation: isMobile ? 45 : 0, // Rotate labels on mobile
+          font: { size: isMobile ? 10 : 12 },
+          color: isDark ? '#93c5fd' : '#2563eb',
+          maxRotation: isMobile ? 45 : 0,
           minRotation: isMobile ? 45 : 0,
         },
-        grid: {
-          display: false, // Hide x-axis grid lines
-        },
+        grid: { display: false },
       },
       y: {
         title: {
           display: true,
-          text: 'Amount ($)',
-          font: {
-            size: isMobile ? 12 : 16, // Smaller font on mobile
-            weight: 'bold' as const,
-          },
-          color: isDark ? '#d1d5db' : '#2c3e50',
+          text: 'Amount (₹)',
+          font: { size: isMobile ? 12 : 16, weight: 'bold' as const },
+          color: isDark ? '#bfdbfe' : '#1e3a8a',
         },
         ticks: {
-          font: {
-            size: isMobile ? 10 : 12, // Smaller font on mobile
-          },
-          color: isDark ? '#9ca3af' : '#7f8c8d', // Gray y-axis labels
+          font: { size: isMobile ? 10 : 12 },
+          color: isDark ? '#93c5fd' : '#2563eb',
           callback: function (value: string | number) {
-            return '$' + value; // Add dollar sign to y-axis labels
+            return '₹' + value;
           },
         },
-        grid: {
-          color: isDark ? '#374151' : '#e0e0e0', // Dark mode grid lines
-        },
-        beginAtZero: true, // Start y-axis at zero for expenses
+        grid: { color: isDark ? '#1e3a8a' : '#e0f2fe' },
+        beginAtZero: true,
       },
     },
   };
 
   return (
-    <div className='relative w-full h-64 sm:h-72 md:h-80'>
+    <div className="relative w-full h-64 sm:h-72 md:h-80">
       <Bar data={data} options={options} />
     </div>
   );
