@@ -73,8 +73,8 @@ A modern, AI-powered expense tracking web application built with Next.js 15, fea
 1. **Clone the repository**
 
    ```bash
-   git clone https://github.com/sahandghavidel/next-expense-tracker-ai.git
-   cd next-expense-tracker-ai
+   git clone https://github.com/Tarun-dube/expense-tracker-ai-nextjs.git
+   cd expense-tracker-ai-nextjs
    ```
 
 2. **Install dependencies**
